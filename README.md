@@ -8,26 +8,37 @@ Empirical replication of the cross-validation inconsistency result for DAG struc
 
 Cross-validation (CV) is the standard method for hyperparameter selection in machine learning. However, Lyu et al. (2024) prove that CV is provably inconsistent for structure learning. Even with infinite data, CV selects too many edges and never recovers the true graph.
 
-This project replicates that result empirically for DAGs using nodewise Lasso regression, comparing two lambda selection criteria: CV (5-fold cross-validation) which is inconsistent, and BIC (Bayesian Information Criterion) which is consistent.
-
-## What the code does
-
-1. Generates data from a known 5-node Gaussian DAG
-2. Learns the DAG using Lasso with CV vs BIC selected lambda
-3. Measures performance using SHD, FDR, and TPR across sample sizes n = 50 to 5000
-4. Plots results showing CV never recovers the true graph while BIC improves consistently
+This project replicates that result empirically for DAGs using nodewise Lasso regression across three settings: known ordering with varying graph sizes, unknown ordering, and non-Gaussian noise. Lambda selection criteria compared: CV (5-fold cross-validation), BIC, and EBIC.
 
 ## Results
 
-![CV vs BIC](dag_cv_inconsistency.png)
+**Experiment 1: Known ordering, varying graph size (p = 5, 10, 20)**
 
-CV's SHD never reaches zero regardless of sample size, confirming the inconsistency result from Corollary 6. BIC improves consistently with more data.
+![Experiment 1](fig1_known_gaussian.png)
+
+CV's SHD never reaches zero regardless of sample size. EBIC improves consistently. The gap grows larger as p increases.
+
+**Experiment 2: Unknown ordering (p = 5)**
+
+![Experiment 2](fig2_unknown_ordering.png)
+
+Unknown ordering roughly doubles SHD across all methods, suggesting Corollary 6 is optimistic. CV fails even more severely when the ordering must be inferred.
+
+**Experiment 3: Non-Gaussian noise (p = 5)**
+
+![Experiment 3](fig3_nongaussian.png)
+
+CV remains inconsistent under Laplace and Uniform noise, suggesting the inconsistency is driven by the prediction-vs-structure objective mismatch rather than Gaussian assumptions.
+
+## Full writeup
+
+See `Mete_Ehliz_CV-DAG-Findings.pdf` for the complete findings.
 
 ## How to run
 
 ```bash
 pip install numpy matplotlib scikit-learn
-python3 "1st project.py"
+python3 simulation.py
 ```
 
 ## Dependencies

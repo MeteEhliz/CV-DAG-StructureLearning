@@ -6,7 +6,7 @@ Empirical replication of the cross-validation inconsistency result for DAG struc
 
 ## Overview
 
-Cross-validation (CV) is the standard method for hyperparameter selection in machine learning. However, Lyu et al. (2024) prove that CV is provably inconsistent for structure learning — even with infinite data, CV selects too many edges and never recovers the true graph.
+Cross-validation (CV) is the standard method for hyperparameter selection in machine learning. However, Lyu et al. (2024) prove that CV is provably inconsistent for structure learning. Even with infinite data, CV selects too many edges and never recovers the true graph.
 
 This project replicates that result empirically for DAGs using nodewise Lasso regression, comparing two lambda selection criteria: CV (5-fold cross-validation) which is inconsistent, and BIC (Bayesian Information Criterion) which is consistent.
 
